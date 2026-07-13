@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GGAI — HoSo Chueh</title>
+  <meta name="description" content="GGAI — an AI-native game monorepo: LLM-driven text adventures and life-sims with Discord and web UIs." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><polyline points='10,80 35,60 55,68 75,30 90,18' fill='none' stroke='%2300a878' stroke-width='10' stroke-linecap='round' stroke-linejoin='round'/></svg>" />
+</head>
+<body>
+  <main>
+    <nav class="crumbs">
+      <a href="/projects/">← All projects</a>
+      <a href="/">Home</a>
+    </nav>
+
+    <header class="hero proj-hero">
+      <p class="eyebrow">Side project · in development</p>
+      <h1>GGAI</h1>
+      <p class="tagline">An AI-native game monorepo: LLM-driven text adventures
+        and life-sims with Discord and web UIs.</p>
+      <ul class="skills">
+        <li>TypeScript</li><li>Node.js</li><li>Turborepo</li>
+        <li>AI SDK</li><li>Zod</li><li>Next.js</li><li>Discord</li>
+      </ul>
+    </header>
+
+    <section>
+      <h2>What it is</h2>
+      <p>
+        GGAI is a workspace of AI-driven games and the shared libraries that power
+        them. It currently hosts two games, both played in Traditional Chinese:
+        <strong>GGAI MUD</strong>, a single-player turn-based text adventure with an
+        LLM-driven narrative that you can play from Discord or a web UI, and
+        <strong>Mountain Road Monkey</strong>, a 30-day Taiwanese motorcycle life-sim
+        presented as a phone UI in Next.js, complete with LLM-narrated mountain
+        runs and LINE-style messages.
+      </p>
+    </section>
+
+    <section>
+      <h2>How it's built</h2>
+      <p>
+        The monorepo is managed with Turborepo: games depend on shared packages for
+        structured logging and an AI layer that wraps the AI SDK, loads prompts, and
+        parses LLM output through Zod schemas so the games can trust what the model
+        returns. A few deliberate constraints keep it simple — no database (game
+        state lives as markdown and JSON on the file system), strict TypeScript with
+        ES modules everywhere, and models served through OpenRouter so each game
+        picks its own model via config.
+      </p>
+      <p>
+        Each game deploys independently to a VPS under PM2, so shipping one game
+        never touches the other.
+      </p>
+    </section>
+
+    <footer>
+      <p>© <span id="year"></span> HoSo Chueh · built plainly, hosted on GitHub Pages</p>
+    </footer>
+  </main>
+
+  <script src="/main.js"></script>
+</body>
+</html>
