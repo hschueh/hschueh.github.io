@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hudder — HoSo Chueh</title>
+  <meta name="description" content="Hudder — an Android prototype that turns a phone into a windshield heads-up display by mirroring a split-screen app." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><polyline points='10,80 35,60 55,68 75,30 90,18' fill='none' stroke='%2300a878' stroke-width='10' stroke-linecap='round' stroke-linejoin='round'/></svg>" />
+</head>
+<body>
+  <main>
+    <nav class="crumbs">
+      <a href="/projects/">← All projects</a>
+      <a href="/">Home</a>
+    </nav>
+
+    <header class="hero proj-hero">
+      <p class="eyebrow">Side project · experimental prototype</p>
+      <h1>Hudder</h1>
+      <p class="tagline">Turns an Android phone or tablet into a simple
+        heads-up display mirror for windshield reflection.</p>
+      <ul class="skills">
+        <li>Kotlin</li><li>Jetpack Compose</li><li>MediaProjection</li>
+        <li>Foreground service</li><li>Material 3</li>
+      </ul>
+    </header>
+
+    <section>
+      <h2>What it is</h2>
+      <p>
+        Put the phone on the dashboard, open a navigation app in one split-screen
+        pane and Hudder in the other, and start capture: Hudder grabs the full
+        display, crops out the opposite pane, and renders it mirrored so its
+        reflection reads correctly on the windshield. Options cover horizontal
+        flip, 180° rotation, a dim backdrop, and which pane to mirror.
+      </p>
+    </section>
+
+    <section>
+      <h2>How it works</h2>
+      <p>
+        The app tracks its own window bounds and whether Android is in multi-window
+        mode. A foreground service receives frames from a
+        <code>MediaProjection</code>-based capture pipeline, maps the app window
+        into captured-screen coordinates, and crops the opposite split-screen pane.
+        A debug mode can show the raw captured frame with the computed crop
+        rectangle overlaid — split-screen geometry is fiddly, and seeing the math
+        beats guessing at it.
+      </p>
+      <p>
+        It's an experimental driving-adjacent prototype, not a production
+        automotive system: frame processing is deliberately throttled, and
+        DRM-protected apps capture as black frames.
+      </p>
+    </section>
+
+    <footer>
+      <p>© <span id="year"></span> HoSo Chueh · built plainly, hosted on GitHub Pages</p>
+    </footer>
+  </main>
+
+  <script src="/main.js"></script>
+</body>
+</html>
