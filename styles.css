@@ -251,5 +251,62 @@ footer p {
   margin: 0;
 }
 
+/* ---------- Sub-pages ---------- */
+
+.crumbs {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  margin-bottom: clamp(2rem, 5vw, 3rem);
+}
+
+.proj-hero { margin-bottom: clamp(2.5rem, 6vw, 3.5rem); }
+.proj-hero h1 { font-size: clamp(2.1rem, 6vw, 3rem); }
+.proj-hero .tagline { max-width: 52ch; }
+.proj-hero .skills { margin-top: 1.25rem; }
+
+.more {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  margin: 1.1rem 0 0;
+}
+
+/* ---------- Portfolio cards ---------- */
+
+.card-grid {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  gap: 1rem;
+}
+
+.card {
+  display: block;
+  height: 100%;
+  background: var(--panel);
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  padding: 1.1rem 1.2rem;
+  color: var(--ink);
+  transition: border-color 0.15s ease;
+}
+.card:hover {
+  border-color: var(--signal);
+  text-decoration: none;
+}
+.card .proj-tag { display: block; margin: 0.15rem 0 0.4rem; }
+.card p { margin: 0; color: var(--muted); font-size: 0.92rem; }
+.card .ext {
+  display: block;
+  margin-top: 0.5rem;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  color: var(--muted);
+}
+
 /* ---------- Responsive ---------- */
 
