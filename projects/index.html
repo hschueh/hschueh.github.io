@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projects — HoSo Chueh</title>
+  <meta name="description" content="Side projects by HoSo Chueh — mobile apps, AI-driven games, and on-device tools." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><polyline points='10,80 35,60 55,68 75,30 90,18' fill='none' stroke='%2300a878' stroke-width='10' stroke-linecap='round' stroke-linejoin='round'/></svg>" />
+</head>
+<body>
+  <main>
+    <nav class="crumbs">
+      <a href="/">← HoSo Chueh</a>
+    </nav>
+
+    <header class="hero proj-hero">
+      <p class="eyebrow">Portfolio</p>
+      <h1>Projects</h1>
+      <p class="tagline">Side projects built after hours — mobile apps, AI-driven
+        games, and on-device tools. Most are personal prototypes; a couple made
+        it to the Play Store.</p>
+    </header>
+
+    <section>
+      <h2>Active Projects</h2>
+      <ul class="card-grid">
+        <li>
+          <a class="card" href="/projects/pawsitive-track.html">
+            <span class="proj-name">Pawsitive Track</span>
+            <span class="proj-tag">React Native</span>
+            <p>Track dog walks — live GPS routes, per-dog event logging,
+               background tracking, and GPX export.</p>
+          </a>
+        </li>
+        <li>
+          <a class="card" href="/projects/trashtalker.html">
+            <span class="proj-name">TrashTalker</span>
+            <span class="proj-tag">Kotlin · sherpa-onnx</span>
+            <p>Fully offline Traditional Chinese voice typing for Android —
+               a floating mic and a voice keyboard, no audio ever leaves the device.</p>
+          </a>
+        </li>
+        <li>
+          <a class="card" href="/projects/ggai.html">
+            <span class="proj-name">GGAI</span>
+            <span class="proj-tag">Turborepo · AI SDK</span>
+            <p>An AI-native game monorepo: LLM-driven text adventures and
+               life-sims with Discord and web UIs.</p>
+          </a>
+        </li>
+        <li>
+          <a class="card" href="/projects/offtrack.html">
+            <span class="proj-name">OffTrack</span>
+            <span class="proj-tag">React Native · MapLibre</span>
+            <p>View-only hiking trail viewer — import GPX routes and take
+               fully offline maps on the trail.</p>
+          </a>
+        </li>
+        <li>
+          <a class="card" href="/projects/hudder.html">
+            <span class="proj-name">Hudder</span>
+            <span class="proj-tag">Kotlin · Compose</span>
+            <p>Turns an Android phone into a windshield heads-up display by
+               mirroring the app in the other split-screen pane.</p>
+          </a>
+        </li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Published Apps</h2>
+      <ul class="card-grid">
+        <li>
+          <a class="card" href="https://play.google.com/store/apps/details?id=com.gonnaggstudio.oh_tai_gi">
+            <span class="proj-name">Oh Tai Gi</span>
+            <span class="proj-tag">Flutter</span>
+            <p>Taiwanese vocabulary learning app. 10,000+ downloads.</p>
+            <span class="ext">Google Play ↗</span>
+          </a>
+        </li>
+        <li>
+          <a class="card" href="https://play.google.com/store/apps/details?id=com.gonnaggstudio.threed2048">
+            <span class="proj-name">2048 3D</span>
+            <span class="proj-tag">Unity</span>
+            <p>A 2048 variation reimagined in 3D.</p>
+            <span class="ext">Google Play ↗</span>
+          </a>
+        </li>
+      </ul>
+    </section>
+
+    <footer>
+      <p>© <span id="year"></span> HoSo Chueh · built plainly, hosted on GitHub Pages</p>
+    </footer>
+  </main>
+
+  <script src="/main.js"></script>
+</body>
+</html>
