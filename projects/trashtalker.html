@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TrashTalker — HoSo Chueh</title>
+  <meta name="description" content="TrashTalker — fully offline Traditional Chinese voice typing for Android: hold to talk, release to get text in any app." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><polyline points='10,80 35,60 55,68 75,30 90,18' fill='none' stroke='%2300a878' stroke-width='10' stroke-linecap='round' stroke-linejoin='round'/></svg>" />
+</head>
+<body>
+  <main>
+    <nav class="crumbs">
+      <a href="/projects/">← All projects</a>
+      <a href="/">Home</a>
+    </nav>
+
+    <header class="hero proj-hero">
+      <p class="eyebrow">Side project · on-device app</p>
+      <h1>TrashTalker</h1>
+      <p class="tagline">Fully offline Traditional Chinese voice typing for
+        Android — hold to talk, release to get text, in any app. Audio never
+        leaves the device.</p>
+      <ul class="skills">
+        <li>Kotlin</li><li>Jetpack Compose</li><li>sherpa-onnx</li>
+        <li>OpenCC</li><li>Accessibility service</li><li>IME</li>
+      </ul>
+    </header>
+
+    <section>
+      <h2>What it is</h2>
+      <p>
+        TrashTalker is local voice input for Android: hold to record, release, and
+        the recognized Traditional Chinese text is typed straight into whatever
+        input field you're in. Recognition runs entirely on-device through
+        sherpa-onnx, so speech never leaves the phone. It works from three
+        surfaces — an in-app playground for testing, a floating mic bubble that
+        rides on top of any app via an accessibility service, and a full voice
+        keyboard registered as a system input method.
+      </p>
+    </section>
+
+    <section>
+      <h2>How it works</h2>
+      <p>
+        Three switchable ASR models are supported — SenseVoice (fast, multilingual,
+        punctuated), Paraformer (strongest Mandarin accuracy), and Whisper Small
+        (99 languages) — downloaded at runtime with resumable downloads and SHA-256
+        verification, which slimmed the APK from 397 MB to 157 MB. Every model's
+        output passes through OpenCC so Simplified Chinese always comes out
+        Traditional. A dictation state machine coordinates recording, recognition,
+        and text injection across the bubble and keyboard, backed by a foreground
+        recording service.
+      </p>
+      <p>
+        Inspired by <a href="https://github.com/Jeffrey0117/SpeakSlow">SpeakSlow</a>,
+        a desktop local Chinese voice-input tool — TrashTalker is an independent
+        Android take on the same idea.
+      </p>
+    </section>
+
+    <footer>
+      <p>© <span id="year"></span> HoSo Chueh · built plainly, hosted on GitHub Pages</p>
+    </footer>
+  </main>
+
+  <script src="/main.js"></script>
+</body>
+</html>
