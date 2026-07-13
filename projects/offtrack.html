@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OffTrack — HoSo Chueh</title>
+  <meta name="description" content="OffTrack — a view-only hiking trail viewer for Android with GPX import and automatic offline maps." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><polyline points='10,80 35,60 55,68 75,30 90,18' fill='none' stroke='%2300a878' stroke-width='10' stroke-linecap='round' stroke-linejoin='round'/></svg>" />
+</head>
+<body>
+  <main>
+    <nav class="crumbs">
+      <a href="/projects/">← All projects</a>
+      <a href="/">Home</a>
+    </nav>
+
+    <header class="hero proj-hero">
+      <p class="eyebrow">Side project · personal tool</p>
+      <h1>OffTrack</h1>
+      <p class="tagline">A view-only hiking trail viewer for Android —
+        import GPX routes and take fully offline maps on the trail.</p>
+      <ul class="skills">
+        <li>React Native</li><li>TypeScript</li><li>Zustand</li>
+        <li>MapLibre</li><li>OpenStreetMap</li>
+      </ul>
+    </header>
+
+    <section>
+      <h2>What it is</h2>
+      <p>
+        Import a GPX file — say, a route exported from AllTrails — and OffTrack
+        draws it on an OSM-based map with distance and elevation stats and an
+        elevation profile. It's deliberately view-only: no walk recording, no
+        accounts, no remote database. Trails are just files on the device, a GPX
+        per trail plus a JSON index.
+      </p>
+    </section>
+
+    <section>
+      <h2>Offline by default</h2>
+      <p>
+        Opening a trail automatically downloads an offline tile pack covering the
+        route's bounding box (padded ~10%, zoom levels 8–15) from OpenFreeMap via
+        MapLibre. Trails with a downloaded pack show an "offline" badge and render
+        fully without a network connection — which is the point, since the best
+        trails rarely come with reception. Failed downloads retry the next time
+        the trail is opened.
+      </p>
+      <p>
+        GPX files can come in through an import button, Android's share sheet, or
+        "open with" from a file manager — all three converge on the same pipeline:
+        parse, validate, compute stats, copy into app storage.
+      </p>
+    </section>
+
+    <footer>
+      <p>© <span id="year"></span> HoSo Chueh · built plainly, hosted on GitHub Pages</p>
+    </footer>
+  </main>
+
+  <script src="/main.js"></script>
+</body>
+</html>
