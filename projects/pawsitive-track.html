@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pawsitive Track — HoSo Chueh</title>
+  <meta name="description" content="Pawsitive Track — a React Native app for tracking dog walks: GPS routes, per-dog event logging, and GPX export." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><polyline points='10,80 35,60 55,68 75,30 90,18' fill='none' stroke='%2300a878' stroke-width='10' stroke-linecap='round' stroke-linejoin='round'/></svg>" />
+</head>
+<body>
+  <main>
+    <nav class="crumbs">
+      <a href="/projects/">← All projects</a>
+      <a href="/">Home</a>
+    </nav>
+
+    <header class="hero proj-hero">
+      <p class="eyebrow">Side project · in development</p>
+      <h1>Pawsitive Track</h1>
+      <p class="tagline">Every walk tells a tail. 🐾 A React Native app for
+        tracking dog walks — GPS routes, walk events, and GPX export.</p>
+      <ul class="skills">
+        <li>React Native</li><li>React 19</li><li>TypeScript</li>
+        <li>Zustand</li><li>iOS + Android</li><li>i18next</li>
+      </ul>
+    </header>
+
+    <section>
+      <h2>What it is</h2>
+      <p>
+        Start a walk and Pawsitive Track records the route live on a map — and,
+        because dog walks are about the dogs, it logs per-dog events along the
+        way: pee, poop (with consistency, for the diligent), photos, encounters,
+        incidents, water breaks. Finished walks land in a history you can review,
+        export, and share as GPX, or turn into a shareable photo with the route,
+        stats, and a watermark overlaid.
+      </p>
+    </section>
+
+    <section>
+      <h2>The details that matter</h2>
+      <p>
+        Tracking keeps running when the app is backgrounded, and a crash-recovery
+        path detects interrupted walks on restart and offers to resume. Start a
+        walk near a familiar spot and it suggests the same dogs as last time.
+        Walks sync to Apple Health and Android Health Connect, themes follow the
+        system, and the whole app is localized in English and Traditional Chinese.
+      </p>
+      <p>
+        Under the hood: Zustand stores persisted through AsyncStorage, a small
+        state machine for the tracking lifecycle
+        (idle → tracking ⇄ paused → finished), and GPX files as the storage
+        format — the walk history is just parsed GPX.
+      </p>
+    </section>
+
+    <footer>
+      <p>© <span id="year"></span> HoSo Chueh · built plainly, hosted on GitHub Pages</p>
+    </footer>
+  </main>
+
+  <script src="/main.js"></script>
+</body>
+</html>
