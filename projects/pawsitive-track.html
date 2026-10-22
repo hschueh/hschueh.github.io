@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Pawsitive Track — HoSo Chueh</title>
-  <meta name="description" content="Pawsitive Track — a React Native app for tracking dog walks: GPS routes, per-dog event logging, and GPX export." />
+  <meta name="description" content="Pawsitive Track — a React Native app for tracking dog walks: live GPS routes, per-dog event logging, remembered spots, achievements, a yearly heatmap recap, and GPX export." />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -21,42 +21,196 @@
     </nav>
 
     <header class="hero proj-hero">
-      <p class="eyebrow">Side project · in development</p>
+      <p class="eyebrow">Side project · <span class="up">in active development</span></p>
       <h1>Pawsitive Track</h1>
-      <p class="tagline">Every walk tells a tail. 🐾 A React Native app for
-        tracking dog walks — GPS routes, walk events, and GPX export.</p>
+      <p class="tagline">Every walk tells a tail. 🐾 A dog-walk tracker for iOS
+        and Android. It records the route and also logs what each dog did
+        along the way.</p>
       <ul class="skills">
-        <li>React Native</li><li>React 19</li><li>TypeScript</li>
-        <li>Zustand</li><li>iOS + Android</li><li>i18next</li>
+        <li>React Native 0.85</li><li>React 19</li><li>TypeScript</li>
+        <li>Zustand</li><li>Reanimated</li><li>Google Maps</li>
+        <li>Firebase</li><li>i18next</li>
       </ul>
     </header>
 
     <section>
-      <h2>What it is</h2>
+      <dl class="facts">
+        <div><dt>Started</dt><dd>Apr 2025</dd></div>
+        <div><dt>Commits</dt><dd>360+</dd></div>
+        <div><dt>Platforms</dt><dd>iOS · Android</dd></div>
+        <div><dt>Languages</dt><dd>EN · 繁中</dd></div>
+      </dl>
+    </section>
+
+    <section class="prose">
+      <h2>Why</h2>
       <p>
-        Start a walk and Pawsitive Track records the route live on a map — and,
-        because dog walks are about the dogs, it logs per-dog events along the
-        way: pee, poop (with consistency, for the diligent), photos, encounters,
-        incidents, water breaks. Finished walks land in a history you can review,
-        export, and share as GPX, or turn into a shareable photo with the route,
-        stats, and a watermark overlaid.
+        Generic fitness trackers treat a dog walk like a jog: distance, pace,
+        calories, done. But anyone walking dogs is really keeping track of the
+        dogs. Did both of them pee? Was that poop okay? Is that the gate with
+        the barking dog behind it? Pawsitive Track is built around those
+        questions. The GPS route is just the map everything else is pinned to.
       </p>
     </section>
 
     <section>
-      <h2>The details that matter</h2>
+      <h2>A walk, start to finish</h2>
+      <ol class="steps">
+        <li>
+          <strong>Pick the pack.</strong>
+          <p>Start a walk near a familiar spot and the app pre-selects the same
+            dogs you walked there last time.</p>
+        </li>
+        <li>
+          <strong>Walk, and tap as things happen.</strong>
+          <p>The route draws live on the map. A radial dog menu fans out so you
+            can log pee, poop (with consistency), water, photos or a note for
+            a specific dog. Each log bumps a scoreboard-style <code>+N</code>
+            on the stats panel with a matching haptic, so you can log without
+            looking at the screen.</p>
+        </li>
+        <li>
+          <strong>Pocket the phone.</strong>
+          <p>Tracking keeps going in the background. On Android you can opt in
+            to showing the live walk over the lock screen, where ending it
+            takes a long press so it can't happen by accident.</p>
+        </li>
+        <li>
+          <strong>Finish and share.</strong>
+          <p>The walk is saved as a GPX file and synced to Apple Health or
+            Health Connect. You can export it as GPX, or as a photo with the
+            route, stats and a watermark drawn on top, in story, square or
+            landscape ratios.</p>
+        </li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>Features</h2>
+      <ul class="features">
+        <li>
+          <strong>🗺️ Live GPS tracking</strong>
+          <p>Real-time route on Google Maps, with pause/resume. It keeps
+            running in the background.</p>
+        </li>
+        <li>
+          <strong>🐕 Per-dog events</strong>
+          <p>Pee, poop, water, photos and notes, logged per dog and pinned to
+            the map as emoji markers.</p>
+        </li>
+        <li>
+          <strong>📍 Remembered spots</strong>
+          <p>Notes like “😠 dog behind this gate” or “🗑️ trash can” turn into
+            spots that show up again on later walks.</p>
+        </li>
+        <li>
+          <strong>🐶 Dog profiles</strong>
+          <p>Per-dog walking stats, a photo gallery from past walks, and
+            sitter notes for whoever is walking them next.</p>
+        </li>
+        <li>
+          <strong>🏆 Achievements</strong>
+          <p>Streaks, milestones, Early Bird and Night Walker. New badges can
+            be shipped through Remote Config without an app update.</p>
+        </li>
+        <li>
+          <strong>🔥 Walk Recap</strong>
+          <p>Every walk on one heatmap, plus highlights such as your best
+            streak, favourite stretch and poops picked up. Shareable as a
+            story-sized image.</p>
+        </li>
+        <li>
+          <strong>🛟 Crash recovery</strong>
+          <p>Detects a walk that was cut off by a crash and offers to resume
+            it on restart.</p>
+        </li>
+        <li>
+          <strong>💾 Backup &amp; restore</strong>
+          <p>Exports walks, photos and dogs as a single bundle. Restoring merges
+            it into what's already on the device instead of overwriting.</p>
+        </li>
+        <li>
+          <strong>🌗 Polish</strong>
+          <p>Light/dark/system themes, English and Traditional Chinese, and
+            haptics designed as a deliberate set of patterns.</p>
+        </li>
+      </ul>
+    </section>
+
+    <section class="prose">
+      <h2>Under the hood</h2>
+
+      <h3>GPX is the database</h3>
       <p>
-        Tracking keeps running when the app is backgrounded, and a crash-recovery
-        path detects interrupted walks on restart and offers to resume. Start a
-        walk near a familiar spot and it suggests the same dogs as last time.
-        Walks sync to Apple Health and Android Health Connect, themes follow the
-        system, and the whole app is localized in English and Traditional Chinese.
+        There's no backend and no SQLite. A finished walk is written as a GPX
+        file, and the walk history is built by parsing those files. Dog events
+        and notes are stored as named waypoints in the same file. Any GPX tool
+        can open a walk, nothing gets locked in, and backup comes down to
+        bundling files.
       </p>
+      <div class="flow">GPS fix → <span class="hl">locationStore</span> (Zustand) → AsyncStorage   <span class="dim"># survives a crash mid-walk</span>
+walk end → <span class="hl">GPX file</span> → DocumentDirectory
+GPX files → parser → history · recap · achievements
+
+<span class="dim">tracking lifecycle:</span>  idle → tracking ⇄ paused → finished → idle</div>
+
+      <h3>A geohash index for remembered spots</h3>
       <p>
-        Under the hood: Zustand stores persisted through AsyncStorage, a small
-        state machine for the tracking lifecycle
-        (idle → tracking ⇄ paused → finished), and GPX files as the storage
-        format — the walk history is just parsed GPX.
+        Every camera move asks two questions: which spots are in this viewport,
+        and is there already a spot within 25&nbsp;m of this new note? A plain
+        <code>filter()</code> over all spots works for a while, then stops
+        scaling. Before choosing, I compared how S2, H3 and geohash are used at
+        Google, Uber and Redis. The app uses a small geohash index: it turns
+        2-D coordinates into a sortable string, answers a region query with a
+        few range scans, and runs an exact distance check at the end. It needs
+        no native library, which matters on Hermes.
+      </p>
+
+      <h3>A heatmap that doesn't turn solid red</h3>
+      <p>
+        Routes are split into ~22&nbsp;m cells. A cell's heat is the number of
+        <em>distinct walks</em> that pass through it, not the number of GPS
+        fixes, so standing still for a long time doesn't outweigh the daily
+        loop. Google's heatmap scales colour to the heaviest single point but
+        paints the <em>sum</em> of overlapping points. That made everything
+        dark red, so the cells are re-binned and the radius re-fitted on every
+        zoom change.
+      </p>
+
+      <h3>Achievements that survive schema changes</h3>
+      <p>
+        Achievements are computed from aggregates folded over the walk history
+        with a cursor, so unlocking stays cheap no matter how many walks there
+        are. When a new badge needs a new metric (time of day, per-day
+        buckets), a migration re-folds the history so old walks still count.
+        Remote badges use time-window metrics evaluated on the device.
+      </p>
+
+      <h3>A design system that fails the build</h3>
+      <p>
+        Colour, type and spacing all come from tokens: a forest-green brand
+        ramp, neutrals with a slight green tint, and semantic roles for light
+        and dark. A unit test fails if any component uses a raw hex value,
+        font size or spacing number.
+      </p>
+
+      <div class="callout">
+        <span class="label">Decision log</span>
+        <p>Should the map move from Google Maps to OpenStreetMap? I looked into
+          it and decided to stay. Cost was the reason for switching, and it
+          turned out not to apply. The existing <code>react-native-maps</code>
+          setup already did everything the app needed.</p>
+      </div>
+    </section>
+
+    <section class="prose">
+      <h2>Status</h2>
+      <p>
+        Built for my own dogs and used on real walks. Development is active,
+        and crash reporting, analytics and Remote Config are all wired up
+        through Firebase. Next on the roadmap: a pet-friendly places map, mood
+        logging, live-track sharing on the web, and a heads-up alert when
+        you're approaching a spot you marked 😠.
       </p>
     </section>
 

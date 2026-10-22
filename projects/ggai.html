@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>GGAI — HoSo Chueh</title>
-  <meta name="description" content="GGAI — an AI-native game monorepo: LLM-driven text adventures and life-sims with Discord and web UIs." />
+  <meta name="description" content="GGAI — an AI-native game monorepo: an agentic text-adventure engine played over Discord and the web, a Taiwanese motorcycle life-sim, and the eval tooling behind them." />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -21,43 +21,213 @@
     </nav>
 
     <header class="hero proj-hero">
-      <p class="eyebrow">Side project · in development</p>
+      <p class="eyebrow">Side project · <span class="up">running on a VPS</span></p>
       <h1>GGAI</h1>
-      <p class="tagline">An AI-native game monorepo: LLM-driven text adventures
-        and life-sims with Discord and web UIs.</p>
+      <p class="tagline">A good game driven by AI, written by AI. A monorepo of
+        LLM-driven games. Its centrepiece is an agentic text-adventure engine
+        that keeps a persistent world going across Discord and the web.</p>
       <ul class="skills">
         <li>TypeScript</li><li>Node.js</li><li>Turborepo</li>
-        <li>AI SDK</li><li>Zod</li><li>Next.js</li><li>Discord</li>
+        <li>AI SDK</li><li>OpenRouter</li><li>Zod</li>
+        <li>Next.js 15</li><li>Discord.js</li><li>Axiom</li>
       </ul>
     </header>
 
     <section>
-      <h2>What it is</h2>
+      <dl class="facts">
+        <div><dt>Started</dt><dd>Jan 2026</dd></div>
+        <div><dt>Commits</dt><dd>1,000+</dd></div>
+        <div><dt>Games</dt><dd>2 + 2 tools</dd></div>
+        <div><dt>Database</dt><dd>None</dd></div>
+      </dl>
+    </section>
+
+    <section class="prose">
+      <h2>The idea</h2>
       <p>
-        GGAI is a workspace of AI-driven games and the shared libraries that power
-        them. It currently hosts two games, both played in Traditional Chinese:
-        <strong>GGAI MUD</strong>, a single-player turn-based text adventure with an
-        LLM-driven narrative that you can play from Discord or a web UI, and
-        <strong>Mountain Road Monkey</strong>, a 30-day Taiwanese motorcycle life-sim
-        presented as a phone UI in Next.js, complete with LLM-narrated mountain
-        runs and LINE-style messages.
+        Text adventures have always had a tiny vocabulary: <em>go north, take
+        lamp</em>. LLMs remove that limit, but they bring their own problems.
+        They forget what happened, contradict themselves, and let the player
+        talk their way into anything. GGAI is my attempt at an engine where the
+        model handles the storytelling and a set of structured tools, typed
+        decisions and plain files keep track of what's actually true. Both
+        games are played in Traditional Chinese.
+      </p>
+      <p>
+        The tagline is meant literally. Almost all of the code was written by
+        AI coding agents working from specs, plans and postmortems I wrote, and
+        the repo keeps an <code>AGENTS.md</code> as its main developer guide.
+      </p>
+    </section>
+
+    <section class="prose">
+      <h2>GGAI MUD — the agentic engine</h2>
+      <p>
+        A single-player, turn-based text adventure. You type what you want to
+        do, in free text, from a Discord thread or the web UI. Each turn is a
+        <strong>tick</strong>, and one AI agent runs the whole tick through
+        tool calls. It reads the world, rolls dice if needed, has a separate
+        narrator model write the prose, and then writes back only the facts
+        that should persist.
+      </p>
+      <div class="flow"><span class="dim">player action (Discord / web)</span> → inbox
+        │
+        ▼
+<span class="hl">AgenticTick</span>  <span class="dim"># one agent, tool calls only</span>
+  0  read     readNpc · readLocation · readQuestStatus · readInventory
+  1  roll     rollDice → d20 + bonus vs DC
+  2  narrate  narrateTick(outcome) → narrator model writes the prose
+  3  persist  updateNpcFact · createLocation · movePlayer · updateQuest …
+  4  finish   finalizeTick(directorNotes) <span class="dim"># memo to its next-tick self</span>
+        │
+        ▼
+post-engine <span class="dim">(deterministic)</span>: quests · dungeons · memory compression
+        │
+        ▼
+<span class="hl">durable feed</span> (append-only NDJSON) → stream to Discord / web</div>
+
+      <h3>Memory modelled on how people remember</h3>
+      <p>
+        Every entity (player, NPC or location) is a Markdown file split three
+        ways. The <strong>profile</strong> holds current state, the
+        <strong>journal</strong> is the short-term narrative stream, and
+        <strong>memory</strong> holds long-term facts. When the journal
+        overflows it's compressed into archives, and when memory overflows a
+        consolidator removes duplicates and prunes it. At the end of each tick
+        the agent also writes <em>director notes</em> to its next-tick self:
+        open threads, what an NPC is planning, foreshadowing it has set up.
+      </p>
+
+      <h3>When the AI gets it wrong: the Historian</h3>
+      <p>
+        If a player notices the story forgot an NPC's name, they type
+        <code>!fix</code> and describe it. That starts a separate Historian
+        agent. It has the same tools as the tick, minus the dice, the narrator
+        and the ability to end a tick, so it can correct the record without
+        moving the story forward. If it can't find evidence for the claim, it
+        answers <em>無從查證</em> (“can't verify”) instead of making something
+        up.
+      </p>
+
+      <h3>Wishes vs. rules</h3>
+      <p>
+        An “anti-godmode” switch decides how far the player gets to write the
+        outcome. In <em>strict</em> mode, “I find a sword” becomes “I search
+        for a sword” and the dice decide. In the default <em>wish</em> mode the
+        game works as co-writing: outcomes the player spells out come true,
+        and the agent keeps the world consistent, sometimes attaching a cost
+        or a hook to a big gain. In both modes, anything that breaks the
+        world's style, such as guns in a wuxia world, is still blocked.
+      </p>
+
+      <h3>Worlds, dungeons, and dying</h3>
+      <p>
+        Worlds are templates. There are ones for Jin Yong wuxia, cyberpunk
+        Taipei and a Harry Potter–style school of magic, among others. New
+        locations and NPCs are generated as the player reaches them. Dungeons
+        have floors and scenes, and dying in one lets you rewind and try
+        again, carrying a <em>past-life memory</em> (前世記憶) of how it went
+        last time.
+      </p>
+    </section>
+
+    <section class="prose">
+      <h2>Mountain Road Monkey 跑山ㄍ</h2>
+      <p>
+        A 30-day life-sim about being a Taiwanese motorcycle kid, presented as
+        a phone screen in Next.js. Each morning you pick one thing: a shift at
+        the convenience store, a date with your girlfriend, or a run up the
+        mountain road. On the mountain you choose how to ride each corner
+        (all-out, show-off or steady), the LLM narrates it, and it resolves
+        as perfect, wobble, crash or fatal. NPCs message you over a LINE-style
+        chat, your bank app shows the car loan piling up, and the game ends
+        after 30 days, when debt wins, or when you meet a truck.
       </p>
     </section>
 
     <section>
-      <h2>How it's built</h2>
+      <h2>Tooling</h2>
+      <ul class="features">
+        <li>
+          <strong>World Forge</strong>
+          <p>Describe a world in one sentence. It generates a reviewable World
+            Bible, then expands that into a full playable template: a style
+            pack plus a seed world.</p>
+        </li>
+        <li>
+          <strong>Narrator Optimizer</strong>
+          <p>An automated loop that tries to improve the narrator prompt.
+            It uses fixed scenarios, deterministic gates, an LLM judge with
+            8 scoring dimensions, pairwise comparisons, a holdout set and a
+            budget cap.</p>
+        </li>
+        <li>
+          <strong>Playground</strong>
+          <p>A local sandbox for trying image and video generation (MiniMax,
+            fal) and checking character consistency, moderation and cost
+            before anything goes into a game.</p>
+        </li>
+        <li>
+          <strong>Ops scripts</strong>
+          <p>World linting, a memory-compression audit, tick revert, and a
+            story exporter that stitches journals and archives back into
+            one complete story.</p>
+        </li>
+      </ul>
+    </section>
+
+    <section class="prose">
+      <h2>Engineering notes</h2>
+
+      <h3>Constraints that keep it small</h3>
       <p>
-        The monorepo is managed with Turborepo: games depend on shared packages for
-        structured logging and an AI layer that wraps the AI SDK, loads prompts, and
-        parses LLM output through Zod schemas so the games can trust what the model
-        returns. A few deliberate constraints keep it simple — no database (game
-        state lives as markdown and JSON on the file system), strict TypeScript with
-        ES modules everywhere, and models served through OpenRouter so each game
-        picks its own model via config.
+        No database: game state is Markdown and JSON on disk, which I can read,
+        diff and fix by hand. Every LLM output is checked against a Zod schema
+        before the engine trusts it. All models go through OpenRouter, and each
+        game picks its own in config. The Turborepo workspace shares two
+        packages, an AI layer and Axiom structured logging, and each game
+        deploys to the VPS under PM2 without touching the other.
       </p>
+
+      <h3>The feed is the source of truth; the stream is best-effort</h3>
       <p>
-        Each game deploys independently to a VPS under PM2, so shipping one game
-        never touches the other.
+        The first delivery design was an outbox that was deleted once read.
+        That meant only one client could ever consume it, and a Discord 503
+        lost the narrative for good. Now every event is appended to a durable
+        per-player feed <em>before</em> it's streamed, and each client reads
+        from its own cursor. A client that disconnects mid-tick doesn't need
+        any resume logic.
+      </p>
+
+      <h3>Typed decisions instead of judgement calls</h3>
+      <p>
+        Questions like “is this the same NPC?” used to be up to the agent. Now
+        some of them go to Jev, a <em>System One</em> model that answers
+        pre-typed questions (choose, score, true or false) with a confidence
+        value, so a fuzzy judgement becomes a number with a threshold. It's
+        wrapped to <em>fail open</em>: if Jev is down, the tick still
+        completes. The first gate in front of the intent parser is now
+        enforced at 0.28.
+      </p>
+
+      <div class="callout">
+        <span class="label">Honest result</span>
+        <p>The first real run of the narrator optimizer, using the same model
+          as production, found <strong>0 winners</strong> in 3 rounds for
+          $1.98. Rewording the prompt didn't move the weakest dimension past
+          the noise. What the run did show was that half of all first drafts
+          failed the length gate (short turns ran long and big turns ran
+          short), so that's the production fix to make first.</p>
+      </div>
+    </section>
+
+    <section class="prose">
+      <h2>Status</h2>
+      <p>
+        Deployed privately on a VPS, playable over Discord and the web, and
+        under active development. 19 roadmap tracks cover quests, parties,
+        dungeons, semantic memory, foreshadowing, observability and tick fault
+        tolerance. The repo is private for now.
       </p>
     </section>
 
