@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Pawsitive Track — every walk tells a tail</title>
-  <meta name="description" content="A walk tracker for dog people. Log what each dog did, remember the spots that matter, and see a year of walks on one map." />
+  <meta name="description" content="A walk tracker for dog people. Log what each dog did, remember the spots that matter, and look back on every walk." />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -13,36 +13,29 @@
 
   <style>
     :root {
-      --forest:   #205C38;
-      --forest-6: #2A744B;
-      --forest-1: #D6EDDF;
-      --paper:    #F7F8F6;
-      --card:     #FFFFFF;
-      --line:     #E0E3DD;
-      --ink:      #1A201C;
-      --soft:     #5E655B;
-      --route:    #E5643A;
-      --pee:      #F9CD35;
-      --poop:     #8B5A2B;
-      --spot:     #7E5FC0;
-      --spot-1:   #EEE9F8;
-      --street:   #E9ECE6;
+      --forest: #205C38;
+      --title:  #205C38;
+      --paper:  #F7F8F6;
+      --line:   #E0E3DD;
+      --ink:    #1A201C;
+      --soft:   #5E655B;
+      --street: #E9ECE6;
+      --park:   #D6EDDF;
+      --route:  #E5643A;
 
       --display: "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
       --body:    "Figtree", ui-sans-serif, system-ui, sans-serif;
-      --wrap:    68rem;
     }
     @media (prefers-color-scheme: dark) {
       :root {
-        --paper:    #101211;
-        --card:     #1B1F1C;
-        --line:     #2E342F;
-        --ink:      #ECEFEA;
-        --soft:     #B3B9B0;
-        --forest-1: #1E3A29;
-        --route:    #F2825A;
-        --spot-1:   #2A2340;
-        --street:   #1F2420;
+        --title:  #80C39D;
+        --paper:  #101211;
+        --line:   #2E342F;
+        --ink:    #ECEFEA;
+        --soft:   #B3B9B0;
+        --street: #1F2420;
+        --park:   #1E3A29;
+        --route:  #F2825A;
       }
     }
 
@@ -58,82 +51,64 @@
     }
     a { color: inherit; text-underline-offset: 3px; }
     :focus-visible { outline: 2px solid var(--route); outline-offset: 3px; border-radius: 4px; }
-    p { margin: 0 0 1rem; }
 
-    .wrap { max-width: var(--wrap); margin: 0 auto; padding: 0 1.25rem; }
+    .wrap { max-width: 62rem; margin: 0 auto; padding-inline: 1.25rem; }
 
-    /* ---------- Top bar ---------- */
     .bar {
       display: flex; align-items: center; justify-content: space-between;
       gap: 1rem; padding-block: 1.25rem;
     }
     .brand {
       display: flex; align-items: center; gap: 0.6rem;
-      font-family: var(--display); font-weight: 700; font-size: 1.1rem;
+      font-family: var(--display); font-weight: 700; font-size: 1.05rem;
       text-decoration: none;
     }
-    .brand svg { width: 2rem; height: 2rem; flex: none; }
-    .bar nav { display: flex; gap: 1.25rem; font-size: 0.92rem; color: var(--soft); }
-    .bar nav a { text-decoration: none; }
-    .bar nav a:hover { color: var(--ink); text-decoration: underline; }
+    .brand svg { width: 1.9rem; height: 1.9rem; flex: none; }
+    .bar a.small { font-size: 0.92rem; color: var(--soft); }
 
-    /* ---------- Hero ---------- */
     .hero {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
       align-items: center;
-      gap: 2rem;
-      padding-block: clamp(2rem, 6vw, 4.5rem) clamp(3rem, 7vw, 5.5rem);
+      gap: 2.5rem;
+      padding-block: clamp(2.5rem, 8vw, 6rem);
     }
-    h1, h2, h3 { font-family: var(--display); margin: 0; }
+    h1, h2 { font-family: var(--display); margin: 0; }
     h1 {
-      font-size: clamp(3rem, 8.5vw, 5.6rem);
+      font-size: clamp(3rem, 8vw, 5.2rem);
       font-weight: 800;
       font-stretch: 78%;
-      line-height: 0.9;
+      line-height: 0.92;
       letter-spacing: -0.02em;
-      color: var(--forest);
-      margin-bottom: 1.4rem;
+      color: var(--title);
+      margin-bottom: 1.3rem;
     }
-    @media (prefers-color-scheme: dark) { h1 { color: #80C39D; } }
-    .lede { font-size: 1.18rem; color: var(--soft); max-width: 30ch; margin-bottom: 1.6rem; }
-    .status {
-      display: inline-flex; align-items: center; gap: 0.55rem;
-      background: var(--forest-1); color: var(--ink);
-      border-radius: 999px; padding: 0.45rem 0.95rem 0.45rem 0.75rem;
-      font-size: 0.9rem; font-weight: 500;
-    }
-    .status::before {
-      content: ""; width: 0.55rem; height: 0.55rem; border-radius: 50%;
-      background: var(--forest-6);
-    }
+    .lede { font-size: 1.15rem; color: var(--soft); max-width: 30ch; margin: 0; }
 
     .walk { width: 100%; height: auto; display: block; }
     .walk .streets path { stroke: var(--street); stroke-width: 14; fill: none; stroke-linecap: round; }
-    .walk .park { fill: var(--forest-1); }
+    .walk .park { fill: var(--park); }
     .walk .route {
       fill: none; stroke: var(--route); stroke-width: 6;
       stroke-linecap: round; stroke-linejoin: round;
       stroke-dasharray: 1; stroke-dashoffset: 0;
     }
-    .pin circle { stroke: var(--card); stroke-width: 3; }
+    .pin circle { stroke: var(--paper); stroke-width: 3; }
     .pin text { font-size: 23px; text-anchor: middle; dominant-baseline: central; }
-    .pin.pee circle { fill: var(--pee); }
-    .pin.poop circle { fill: var(--poop); }
-    .pin.spot circle { fill: var(--spot); }
-    .pin.start circle { fill: var(--forest-6); }
-    .pin.end circle { fill: var(--ink); }
-    .pin.photo circle { fill: #2F6499; }
+    .pin.start circle { fill: #2A744B; }
+    .pin.pee circle   { fill: #F9CD35; }
+    .pin.poop circle  { fill: #8B5A2B; }
+    .pin.spot circle  { fill: #7E5FC0; }
+    .pin.end circle   { fill: var(--ink); }
 
     @media (prefers-reduced-motion: no-preference) {
-      .walk .route { stroke-dashoffset: 1; animation: draw 3.2s cubic-bezier(.45,.05,.35,1) 0.3s forwards; }
+      .walk .route { stroke-dashoffset: 1; animation: draw 3s cubic-bezier(.45,.05,.35,1) 0.3s forwards; }
       .pin { opacity: 0; transform-box: fill-box; transform-origin: 50% 100%; animation: drop 0.45s cubic-bezier(.3,1.6,.5,1) forwards; }
       .pin.start { animation-delay: 0.15s; }
-      .pin.d1 { animation-delay: 0.95s; }
-      .pin.d2 { animation-delay: 1.55s; }
-      .pin.d3 { animation-delay: 2.1s; }
-      .pin.d4 { animation-delay: 2.7s; }
-      .pin.end { animation-delay: 3.45s; }
+      .pin.d1 { animation-delay: 1s; }
+      .pin.d2 { animation-delay: 1.7s; }
+      .pin.d3 { animation-delay: 2.5s; }
+      .pin.end { animation-delay: 3.2s; }
     }
     @keyframes draw { to { stroke-dashoffset: 0; } }
     @keyframes drop {
@@ -141,211 +116,47 @@
       to   { opacity: 1; transform: none; }
     }
 
-    /* ---------- Questions ---------- */
-    .questions {
+    .features {
+      list-style: none; margin: 0; padding: clamp(2.5rem, 6vw, 4rem) 0;
       border-top: 1px solid var(--line);
-      border-bottom: 1px solid var(--line);
-      padding: clamp(3rem, 7vw, 5rem) 0;
+      display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 2rem;
     }
-    .questions p.intro { color: var(--soft); max-width: 46ch; font-size: 1.05rem; }
-    .questions ul {
-      list-style: none; padding: 0; margin: 1.5rem 0 1.75rem;
-      font-family: var(--display); font-weight: 600; font-stretch: 85%;
-      font-size: clamp(1.6rem, 4.2vw, 2.6rem); line-height: 1.15;
-    }
-    .questions li { padding: 0.35rem 0; }
-    .questions li:nth-child(2) { padding-left: clamp(1rem, 6vw, 5rem); }
-    .questions li:nth-child(3) { padding-left: clamp(2rem, 12vw, 10rem); }
-    .questions p.answer { max-width: 50ch; font-size: 1.05rem; margin: 0; }
+    .features .icon { font-size: 1.6rem; display: block; margin-bottom: 0.6rem; }
+    .features h2 { font-size: 1.25rem; font-weight: 700; font-stretch: 85%; margin-bottom: 0.35rem; }
+    .features p { margin: 0; color: var(--soft); }
 
-    /* ---------- Feature rows ---------- */
-    .features { padding-block: clamp(3rem, 7vw, 5rem) 1rem; }
-    .row {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-      gap: clamp(1.5rem, 5vw, 4.5rem);
-      align-items: center;
-      margin-bottom: clamp(3.5rem, 9vw, 6.5rem);
-    }
-    .row:nth-child(even) .copy { order: 2; }
-    .row h2 {
-      font-size: clamp(1.7rem, 3.6vw, 2.35rem);
-      font-weight: 700; font-stretch: 85%;
-      line-height: 1.08; letter-spacing: -0.01em;
-      margin-bottom: 0.9rem;
-    }
-    .row .copy p { color: var(--soft); max-width: 42ch; }
-
-    .vignette {
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: 28px;
-      padding: clamp(1.25rem, 3vw, 2rem);
-      min-height: 15rem;
-      display: grid;
-      place-items: center;
+    footer {
+      border-top: 1px solid var(--line);
+      padding-block: 1.75rem 2.5rem;
+      display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem;
+      color: var(--soft); font-size: 0.92rem;
     }
 
-    /* Dog fan */
-    .fan { display: flex; gap: 1.25rem; align-items: flex-end; flex-wrap: wrap; justify-content: center; }
-    .dog { text-align: center; position: relative; }
-    .dog .face {
-      width: 4.6rem; height: 4.6rem; border-radius: 50%;
-      display: grid; place-items: center; font-size: 2.2rem;
-      background: var(--forest-1);
-      margin: 0 auto 0.5rem;
-    }
-    .dog.picked .face { box-shadow: 0 0 0 4px var(--card), 0 0 0 7px var(--forest-6); }
-    .dog .name { font-weight: 600; font-size: 0.95rem; }
-    .dog .tally { font-size: 0.85rem; color: var(--soft); }
-    .bump {
-      position: absolute; top: -0.4rem; right: -0.6rem;
-      background: var(--route); color: #fff;
-      font-family: var(--display); font-weight: 700; font-size: 0.85rem;
-      border-radius: 999px; padding: 0.1rem 0.5rem;
-    }
-    .actions { display: flex; gap: 0.6rem; justify-content: center; margin-top: 1.4rem; width: 100%; }
-    .actions span {
-      width: 3rem; height: 3rem; border-radius: 50%;
-      display: grid; place-items: center; font-size: 1.3rem;
-    }
-    .actions .a-pee  { background: var(--pee); }
-    .actions .a-poop { background: var(--poop); }
-    .actions .a-water { background: #8EB8E0; }
-    .actions .a-note { background: var(--spot); }
-
-    /* Spots */
-    .spots { width: 100%; max-width: 26rem; }
-    .spots svg { width: 100%; height: auto; display: block; }
-    .spots .streets path { stroke: var(--street); stroke-width: 12; fill: none; stroke-linecap: round; }
-    .spots .tag rect { fill: var(--spot-1); }
-    .spots .tag text { fill: var(--ink); font-family: var(--body); font-size: 13px; font-weight: 500; }
-    .spots .tag circle { fill: var(--spot); stroke: var(--card); stroke-width: 3; }
-    .spots .tag .emoji { font-size: 15px; text-anchor: middle; dominant-baseline: central; }
-
-    /* Sitter card */
-    .profile { width: 100%; max-width: 22rem; }
-    .profile header { display: flex; align-items: center; gap: 0.9rem; margin-bottom: 1.1rem; }
-    .profile .face {
-      width: 3.4rem; height: 3.4rem; border-radius: 50%;
-      display: grid; place-items: center; font-size: 1.7rem; background: var(--forest-1);
-    }
-    .profile h3 { font-size: 1.35rem; font-weight: 700; }
-    .profile .meta { color: var(--soft); font-size: 0.88rem; }
-    .profile dl { margin: 0; }
-    .profile dt { font-weight: 600; font-size: 0.85rem; color: var(--forest-6); margin-top: 0.8rem; }
-    @media (prefers-color-scheme: dark) { .profile dt { color: #80C39D; } }
-    .profile dd { margin: 0.15rem 0 0; font-size: 0.95rem; }
-
-    /* Heatmap */
-    .heat { width: 100%; max-width: 26rem; }
-    .heat svg { width: 100%; height: auto; display: block; border-radius: 16px; }
-    .heat .bg { fill: var(--street); }
-    .heat .chips { display: flex; gap: 0.5rem; margin-top: 0.9rem; flex-wrap: wrap; }
-    .heat .chips span {
-      border: 1px solid var(--line); border-radius: 999px;
-      padding: 0.25rem 0.8rem; font-size: 0.85rem; color: var(--soft);
-    }
-    .heat .chips span.on { background: var(--forest); border-color: var(--forest); color: #fff; }
-    .heat .numbers { display: flex; gap: 1.5rem; margin-top: 1rem; flex-wrap: wrap; }
-    .heat .numbers b { display: block; font-family: var(--display); font-size: 1.5rem; font-weight: 700; line-height: 1.1; }
-    .heat .numbers span { font-size: 0.85rem; color: var(--soft); }
-
-    /* Badges */
-    .badges { display: grid; grid-template-columns: repeat(2, minmax(0, 8.5rem)); gap: 1.4rem 2rem; justify-content: center; }
-    .badge { text-align: center; }
-    .badge .medal {
-      width: 4.8rem; height: 4.8rem; margin: 0 auto 0.55rem;
-      border-radius: 50%; display: grid; place-items: center; font-size: 2.1rem;
-      background: var(--forest-1);
-      border: 3px solid var(--forest-6);
-    }
-    .badge.locked .medal { filter: grayscale(1); opacity: 0.45; border-style: dashed; border-color: var(--soft); }
-    .badge b { display: block; font-weight: 600; font-size: 0.95rem; }
-    .badge span { font-size: 0.82rem; color: var(--soft); }
-
-    /* ---------- Basics ---------- */
-    .basics { padding-block: 0 clamp(3.5rem, 8vw, 5.5rem); }
-    .basics h2 { font-size: clamp(1.5rem, 3vw, 1.9rem); font-weight: 700; font-stretch: 85%; margin-bottom: 1.4rem; }
-    .basics ul {
-      list-style: none; padding: 0; margin: 0;
-      display: grid; grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
-      gap: 1.1rem 2.5rem;
-    }
-    .basics li { display: grid; grid-template-columns: 1.8rem 1fr; gap: 0.5rem; }
-    .basics li > span:first-child { font-size: 1.2rem; line-height: 1.4; }
-    .basics b { font-weight: 600; }
-    .basics p { margin: 0; color: var(--soft); font-size: 0.95rem; }
-
-    /* ---------- Closing band ---------- */
-    .closing { background: var(--forest); color: #fff; }
-    .closing .wrap {
-      display: grid; grid-template-columns: minmax(0, 1fr) auto;
-      gap: 2rem; align-items: center;
-      padding-top: clamp(3rem, 7vw, 5rem); padding-bottom: clamp(3rem, 7vw, 5rem);
-    }
-    .closing h2 { font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 800; font-stretch: 80%; line-height: 1; margin-bottom: 1rem; }
-    .closing p { color: #D6EDDF; max-width: 46ch; }
-    .closing .links { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.5rem; }
-    .btn {
-      display: inline-block; text-decoration: none; font-weight: 600;
-      border-radius: 999px; padding: 0.7rem 1.3rem;
-    }
-    .btn.solid { background: #fff; color: var(--forest); }
-    .btn.ghost { border: 1.5px solid rgba(255,255,255,0.55); color: #fff; }
-    .btn:hover { text-decoration: underline; }
-    .closing .bigpaw { width: clamp(6rem, 16vw, 11rem); height: auto; opacity: 0.95; }
-
-    footer { padding: 1.5rem 0 2.5rem; color: var(--soft); font-size: 0.88rem; }
-    footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem; }
-
-    /* ---------- Responsive ---------- */
     @media (max-width: 760px) {
       .hero { grid-template-columns: 1fr; }
-      .row { grid-template-columns: 1fr; }
-      .row:nth-child(even) .copy { order: 0; }
-      .closing .wrap { grid-template-columns: 1fr; }
-      .closing .bigpaw { display: none; }
-      .bar nav a.secondary { display: none; }
+      .features { grid-template-columns: 1fr; gap: 1.75rem; }
     }
   </style>
 </head>
 <body>
-  <!-- Paw mark, reused by the logo and the closing band -->
-  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
-    <symbol id="paw" viewBox="0 0 100 100">
-      <g fill="none" stroke="currentColor" stroke-width="6">
-        <ellipse cx="25" cy="40" rx="8" ry="11"/>
-        <ellipse cx="44" cy="28" rx="8" ry="12"/>
-        <ellipse cx="64" cy="34" rx="8" ry="11" transform="rotate(20 64 34)"/>
-        <ellipse cx="76" cy="55" rx="7" ry="9" transform="rotate(35 76 55)"/>
-        <path d="M28 70c0-12 13-23 23-23 9 0 13 8 15 17 2 9-1 17-10 17-7 0-10-5-16-5s-12-0-12-6z"/>
-      </g>
-    </symbol>
-  </svg>
-
   <header class="wrap bar">
     <a class="brand" href="/pawsitive-track/">
-      <svg viewBox="0 0 100 100" aria-hidden="true"><rect width="100" height="100" rx="24" fill="#205C38"/><use href="#paw" color="#fff" transform="translate(12 12) scale(0.76)"/></svg>
+      <svg viewBox="0 0 100 100" aria-hidden="true"><rect width="100" height="100" rx="24" fill="#205C38"/><g fill="none" stroke="#fff" stroke-width="5" transform="translate(12 12) scale(0.76)"><ellipse cx="25" cy="40" rx="8" ry="11"/><ellipse cx="44" cy="28" rx="8" ry="12"/><ellipse cx="64" cy="34" rx="8" ry="11" transform="rotate(20 64 34)"/><ellipse cx="76" cy="55" rx="7" ry="9" transform="rotate(35 76 55)"/><path d="M28 70c0-12 13-23 23-23 9 0 13 8 15 17 2 9-1 17-10 17-7 0-10-5-16-5s-12 0-12-6z"/></g></svg>
       Pawsitive Track
     </a>
-    <nav aria-label="Site">
-      <a href="/projects/pawsitive-track.html">How it's built</a>
-      <a class="secondary" href="/projects/">More projects</a>
-    </nav>
+    <a class="small" href="/projects/pawsitive-track.html">How it's built</a>
   </header>
 
-  <main>
-    <section class="wrap hero">
+  <main class="wrap">
+    <section class="hero">
       <div>
         <h1>Every walk tells a tail.</h1>
-        <p class="lede">A walk tracker for dog people. It follows the dogs, not
-          just the distance, so you always know who peed, where, and which gate
-          to steer clear of tomorrow.</p>
-        <span class="status">In development for iOS and Android</span>
+        <p class="lede">A walk tracker for dog people. It follows the dogs,
+          not just the distance.</p>
       </div>
 
-      <svg class="walk" viewBox="0 0 600 440" role="img" aria-label="A walk drawn on a map: the route starts at home, with a pee stop, a poop stop, a photo, and a spot marked as an unfriendly dog, before ending back near home.">
+      <svg class="walk" viewBox="0 0 600 440" role="img" aria-label="A walk drawn on a map, with a pee stop, a poop stop and a spot marked as an unfriendly dog along the route.">
         <rect class="park" x="330" y="40" width="210" height="150" rx="28"/>
         <g class="streets">
           <path d="M20 330 H580"/>
@@ -360,181 +171,34 @@
         <g class="pin start"><circle cx="110" cy="360" r="20"/><text x="110" y="360">🏠</text></g>
         <g class="pin pee d1"><circle cx="140" cy="215" r="22"/><text x="140" y="215">💧</text></g>
         <g class="pin poop d2"><circle cx="410" cy="78" r="22"/><text x="410" y="78">💩</text></g>
-        <g class="pin photo d3"><circle cx="512" cy="150" r="22"/><text x="512" y="150">📸</text></g>
-        <g class="pin spot d4"><circle cx="300" cy="285" r="22"/><text x="300" y="285">😠</text></g>
+        <g class="pin spot d3"><circle cx="300" cy="285" r="22"/><text x="300" y="285">😠</text></g>
         <g class="pin end"><circle cx="210" cy="330" r="12"/></g>
       </svg>
     </section>
 
-    <section class="questions">
-      <div class="wrap">
-        <p class="intro">Fitness apps treat a dog walk like a jog: distance, pace,
-          done. But on the way home, the things you're actually wondering are:</p>
-        <ul>
-          <li>Did both of them pee?</li>
-          <li>When did Mochi last poop?</li>
-          <li>Which house had the dog that lunges at the fence?</li>
-        </ul>
-        <p class="answer">Pawsitive Track answers those. The route is just the map
-          everything else gets pinned to.</p>
-      </div>
-    </section>
+    <ul class="features">
+      <li>
+        <span class="icon" aria-hidden="true">🐕</span>
+        <h2>Log each dog</h2>
+        <p>Pee, poop, water and photos, tapped per dog and pinned where they happened.</p>
+      </li>
+      <li>
+        <span class="icon" aria-hidden="true">📍</span>
+        <h2>Remember spots</h2>
+        <p>Mark the barking dog behind the gate once. It shows up on every walk after.</p>
+      </li>
+      <li>
+        <span class="icon" aria-hidden="true">🔥</span>
+        <h2>Look back</h2>
+        <p>Every walk on one heatmap, with streaks and badges along the way.</p>
+      </li>
+    </ul>
 
-    <section class="wrap features" aria-label="Features">
-      <div class="row">
-        <div class="copy">
-          <h2>Log what each dog does, without breaking stride</h2>
-          <p>Tap a dog, tap what happened: pee, poop, water, a photo, a note.
-            Every tap gives a little buzz and a +1, so you can log one-handed
-            with the leash in the other hand and barely look down.</p>
-          <p>Start near a familiar spot and the app picks the same dogs you walked
-            there last time.</p>
-        </div>
-        <div class="vignette" aria-hidden="true">
-          <div>
-            <div class="fan">
-              <div class="dog picked"><div class="face">🐕</div><div class="name">Mochi</div><div class="tally">💧 3 · 💩 1</div><span class="bump">+1</span></div>
-              <div class="dog"><div class="face">🐩</div><div class="name">Tofu</div><div class="tally">💧 2 · 💩 0</div></div>
-            </div>
-            <div class="actions">
-              <span class="a-pee">💧</span><span class="a-poop">💩</span><span class="a-water">🥣</span><span class="a-note">📝</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="copy">
-          <h2>Remember the spots that matter</h2>
-          <p>Leave a note on the map, like “😠 dog behind this gate”, “🗑️ trash
-            can here” or “🐿️ squirrel tree”, and it shows up again on every
-            walk that passes by.</p>
-          <p>See it again and log it again, and the spot counts the sighting
-            instead of adding a duplicate pin.</p>
-        </div>
-        <div class="vignette spots-v" aria-hidden="true">
-          <div class="spots">
-            <svg viewBox="0 0 400 260">
-              <g class="streets">
-                <path d="M0 70 H400"/><path d="M0 200 H400"/>
-                <path d="M110 0 V260"/><path d="M290 0 V260"/>
-              </g>
-              <g class="tag"><rect x="128" y="52" width="196" height="34" rx="17"/><circle cx="110" cy="70" r="16"/><text class="emoji" x="110" y="70">😠</text><text x="142" y="74">Dog behind this gate ×4</text></g>
-              <g class="tag"><rect x="308" y="118" width="84" height="34" rx="17"/><circle cx="290" cy="135" r="16"/><text class="emoji" x="290" y="135">🗑️</text><text x="320" y="140">Trash</text></g>
-              <g class="tag"><circle cx="110" cy="200" r="16"/><text class="emoji" x="110" y="200">🐿️</text><rect x="128" y="183" width="120" height="34" rx="17"/><text x="142" y="205">Squirrel tree</text></g>
-            </svg>
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="copy">
-          <h2>Hand the leash to a sitter</h2>
-          <p>Every dog gets a profile: their walk stats, photos from past walks,
-            and the notes you'd otherwise text to a sitter at the last minute,
-            such as feeding, quirks and who to call.</p>
-        </div>
-        <div class="vignette" aria-hidden="true">
-          <div class="profile">
-            <header>
-              <div class="face">🐕</div>
-              <div><h3>Mochi</h3><div class="meta">142 walks · 318 km together</div></div>
-            </header>
-            <dl>
-              <dt>Walks</dt><dd>Pulls toward cats. Treats are in the left pocket.</dd>
-              <dt>Feeding</dt><dd>One scoop at 7am and 6pm. No chicken.</dd>
-              <dt>Vet</dt><dd>Dr. Lin, open until 8pm.</dd>
-            </dl>
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="copy">
-          <h2>A whole year of walks on one map</h2>
-          <p>Walk Recap paints every walk onto a single heatmap. The streets you
-            walk every day glow brightest. Alongside it you get your best
-            streak, your favourite stretch, your busiest month and how many
-            poops you picked up, all in one story-sized image to share.</p>
-        </div>
-        <div class="vignette" aria-hidden="true">
-          <div class="heat">
-            <svg viewBox="0 0 400 230">
-              <defs>
-                <filter id="blur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="9"/></filter>
-                <linearGradient id="hot" x1="0" x2="1"><stop offset="0" stop-color="#F9CD35"/><stop offset="1" stop-color="#E5643A"/></linearGradient>
-              </defs>
-              <rect class="bg" width="400" height="230"/>
-              <g filter="url(#blur)" fill="none" stroke-linecap="round">
-                <path d="M40 190 H200 V60 H330" stroke="#F9CD35" stroke-width="22" opacity="0.7"/>
-                <path d="M200 190 V60" stroke="#E5643A" stroke-width="20" opacity="0.9"/>
-                <path d="M60 190 H200" stroke="#E5643A" stroke-width="16" opacity="0.75"/>
-                <path d="M200 120 H360 V200" stroke="#F9CD35" stroke-width="14" opacity="0.5"/>
-                <path d="M330 60 C370 40 380 20 390 10" stroke="#F9CD35" stroke-width="10" opacity="0.35"/>
-              </g>
-            </svg>
-            <div class="chips"><span>All time</span><span class="on">2026</span></div>
-            <div class="numbers">
-              <div><b>312 km</b><span>walked</span></div>
-              <div><b>21 days</b><span>best streak</span></div>
-              <div><b>486</b><span>poops picked up</span></div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="copy">
-          <h2>Badges for the walks that take effort</h2>
-          <p>Get out before 7am, walk two dogs at once, keep a streak alive
-            through a rainy week. The achievements are small and a bit silly,
-            and they're surprisingly good motivation on a cold morning.</p>
-        </div>
-        <div class="vignette" aria-hidden="true">
-          <div class="badges">
-            <div class="badge"><div class="medal">🌅</div><b>Early Bird</b><span>10 walks before 7am</span></div>
-            <div class="badge"><div class="medal">🔥</div><b>Week Warrior</b><span>7 days in a row</span></div>
-            <div class="badge"><div class="medal">🐕</div><b>Pack Leader</b><span>Walk 2 dogs at once</span></div>
-            <div class="badge locked"><div class="medal">🦉</div><b>Night Walker</b><span>10 walks after 9pm</span></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="wrap basics">
-      <h2>And the things a tracker should just do</h2>
-      <ul>
-        <li><span>📱</span><div><b>Keeps going in your pocket.</b><p>Tracking carries on with the screen off. On Android, the walk can sit on your lock screen.</p></div></li>
-        <li><span>🛟</span><div><b>Survives a crash.</b><p>If the app quits mid-walk, it offers to pick up where you left off.</p></div></li>
-        <li><span>❤️</span><div><b>Syncs to your health app.</b><p>Walks land in Apple Health or Health Connect automatically.</p></div></li>
-        <li><span>🖼️</span><div><b>Shares nicely.</b><p>Turn a walk photo into a postcard with the route and stats on top, in any size from a story to a widescreen.</p></div></li>
-        <li><span>💾</span><div><b>Your data, your files.</b><p>Walks export as standard GPX. A full backup moves everything to a new phone.</p></div></li>
-        <li><span>🌗</span><div><b>Light, dark, 中文.</b><p>Follows your system theme, in English or Traditional Chinese.</p></div></li>
-      </ul>
-    </section>
-
-    <section class="closing">
-      <div class="wrap">
-        <div>
-          <h2>Coming to iOS and Android.</h2>
-          <p>Pawsitive Track is a side project, built for my own dogs and
-            used on real walks. It isn't in the app stores yet.</p>
-          <div class="links">
-            <a class="btn solid" href="/projects/pawsitive-track.html">See how it's built</a>
-            <a class="btn ghost" href="/projects/">More projects</a>
-          </div>
-        </div>
-        <svg class="bigpaw" viewBox="0 0 100 100" aria-hidden="true"><use href="#paw" color="#fff"/></svg>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <div class="wrap">
-      <span>Made with 💚 for good dogs everywhere.</span>
+    <footer>
+      <span>In development for iOS and Android.</span>
       <span>© <span id="year"></span> <a href="/">HoSo Chueh</a></span>
-    </div>
-  </footer>
+    </footer>
+  </main>
 
   <script src="/main.js"></script>
 </body>
