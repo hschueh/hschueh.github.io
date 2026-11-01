@@ -71,6 +71,64 @@
     .lede { font-size: 1.15rem; color: var(--soft); max-width: 32ch; margin: 0; }
 
     /* ---------- Play log ---------- */
+    /* ---------- CTA ---------- */
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 0.55rem;
+      margin: 0 0 1.1rem; padding: 0.3rem 0.8rem 0.3rem 0.65rem;
+      border: 1px solid var(--line); border-radius: 999px;
+      font-size: 0.82rem; font-weight: 500; letter-spacing: 0.02em; color: var(--soft);
+    }
+    .eyebrow::before {
+      content: ""; width: 0.5rem; height: 0.5rem; border-radius: 50%;
+      background: var(--jade); box-shadow: 0 0 0 0 rgba(111,191,154,0.5);
+    }
+    @media (prefers-reduced-motion: no-preference) {
+      .eyebrow::before { animation: pulse 2.4s ease-out infinite; }
+    }
+    @keyframes pulse {
+      70%  { box-shadow: 0 0 0 0.5rem rgba(111,191,154,0); }
+      100% { box-shadow: 0 0 0 0 rgba(111,191,154,0); }
+    }
+
+    .actions { display: flex; align-items: center; flex-wrap: wrap; gap: 0.75rem 1.5rem; margin-top: 2rem; }
+    .cta {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      padding: 0.9rem 1.7rem; border-radius: 10px;
+      background: var(--lantern); color: var(--night);
+      font-weight: 600; font-size: 1.05rem; text-decoration: none;
+      box-shadow: 0 6px 24px -8px rgba(232,163,61,0.55);
+      transition: transform 0.15s, background 0.15s, box-shadow 0.15s;
+    }
+    .cta span { transition: transform 0.15s; }
+    .cta:hover { background: #F0B457; transform: translateY(-2px); box-shadow: 0 10px 28px -8px rgba(232,163,61,0.7); }
+    .cta:hover span { transform: translateX(3px); }
+    .cta:active { transform: none; }
+    .ghost {
+      display: inline-flex; align-items: center; justify-content: center;
+      padding: 0.85rem 1.4rem; border-radius: 10px;
+      border: 1px solid var(--line); color: var(--ink);
+      font-weight: 500; font-size: 1rem; text-decoration: none;
+      transition: border-color 0.15s, background 0.15s;
+    }
+    .ghost:hover { border-color: var(--soft); background: var(--panel); }
+    .fine { margin: 0.9rem 0 0; font-size: 0.85rem; color: var(--soft); }
+
+    .closer {
+      text-align: center;
+      padding: clamp(2.5rem, 6vw, 4rem) 1.25rem;
+      border-top: 1px solid var(--line);
+    }
+    .closer h2 { font-family: var(--display); font-size: clamp(1.6rem, 4vw, 2.2rem); line-height: 1.15; }
+    .closer .actions { justify-content: center; margin-top: 1.5rem; }
+
+    .bar .nav-play {
+      font-size: 0.9rem; font-weight: 600; text-decoration: none;
+      color: var(--lantern); border: 1px solid var(--lantern);
+      padding: 0.35rem 0.9rem; border-radius: 999px;
+    }
+    .bar .nav-play:hover { background: var(--lantern); color: var(--night); }
+    .bar nav { display: flex; align-items: center; gap: 1.25rem; }
+
     .log {
       background: var(--panel);
       border: 1px solid var(--line);
@@ -141,6 +199,8 @@
     }
 
     @media (max-width: 760px) {
+      .cta { width: 100%; justify-content: center; }
+      .ghost { width: 100%; }
       .hero { grid-template-columns: 1fr; gap: 2.25rem; }
       .features { grid-template-columns: 1fr; gap: 1.75rem; }
     }
@@ -152,16 +212,25 @@
       <img src="/ggai/icon.png" alt="" width="40" height="40" />
       GGAI
     </a>
-    <a class="small" href="/projects/ggai.html">How it's built</a>
+    <nav>
+      <a class="small" href="/projects/ggai.html">How it's built</a>
+      <a class="nav-play" href="https://alpha.itshoso.com/">Play</a>
+    </nav>
   </header>
 
   <main class="wrap">
     <section class="hero">
       <div>
+        <p class="eyebrow">Alpha · playable now</p>
         <h1>A text RPG that remembers.</h1>
         <p class="lede">Type anything. An AI game master rolls the dice, tells
           the story, and keeps track of everything you did, so the world
           remembers it too.</p>
+        <div class="actions">
+          <a class="cta" href="https://alpha.itshoso.com/">Play the alpha <span aria-hidden="true">→</span></a>
+          <a class="ghost" href="https://discord.gg/SNNbTzK6Ga">Join the Discord</a>
+        </div>
+        <p class="fine">Early build, so expect rough edges. Story in Traditional Chinese.</p>
       </div>
 
       <div class="log" lang="zh-Hant" role="img" aria-label="An example of play: the player pretends to be drunk to see where the innkeeper hides a letter, rolls a success, and three days later the innkeeper recognises them.">
@@ -193,8 +262,16 @@
       </li>
     </ul>
 
+    <section class="closer">
+      <h2>Lie to an innkeeper. See what happens.</h2>
+      <div class="actions">
+        <a class="cta" href="https://alpha.itshoso.com/">Play the alpha <span aria-hidden="true">→</span></a>
+        <a class="ghost" href="https://discord.gg/SNNbTzK6Ga">Join the Discord</a>
+      </div>
+    </section>
+
     <footer>
-      <span>Played in Traditional Chinese, on Discord or the web. Private for now.</span>
+      <span>Played in Traditional Chinese, on <a href="https://discord.gg/SNNbTzK6Ga">Discord</a> or the web. Alpha now open.</span>
       <span>© <span id="year"></span> <a href="/">HoSo Chueh</a></span>
     </footer>
   </main>
