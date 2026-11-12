@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nanotice — HoSo Chueh</title>
+  <meta name="description" content="Nanotice — an Android prototype that summarizes notifications on-device with Gemini Nano or open models, and runs a local agent over them." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><polyline points='10,80 35,60 55,68 75,30 90,18' fill='none' stroke='%2300a878' stroke-width='10' stroke-linecap='round' stroke-linejoin='round'/></svg>" />
+</head>
+<body>
+  <main>
+    <nav class="crumbs">
+      <a href="/projects/">← All projects</a>
+      <a href="/">Home</a>
+    </nav>
+
+    <header class="hero proj-hero">
+      <p class="eyebrow">Side project · on-device AI prototype</p>
+      <h1>Nanotice</h1>
+      <p class="tagline">An Android notification inbox that summarizes, triages,
+        and acts on your notifications with an on-device LLM — nothing is sent
+        to the cloud.</p>
+      <ul class="skills">
+        <li>Kotlin</li><li>Jetpack Compose</li><li>Gemini Nano</li>
+        <li>LiteRT-LM</li><li>Room</li><li>Koin</li>
+      </ul>
+    </header>
+
+    <section>
+      <h2>What it is</h2>
+      <p>
+        Nanotice listens to incoming notifications, groups them by app and
+        conversation, and turns each group into a short card: a summary, an
+        urgency level, and a suggested one-tap action — reply, open a link,
+        call, add to calendar. Cards can be archived toward inbox zero.
+      </p>
+      <p>
+        An assistant tab runs a small local agent over the same data: it can
+        list notifications, act on them, archive them, and call tools exposed by
+        other installed apps. Every action stops at a confirm dialog first,
+        since notification text is untrusted input.
+      </p>
+    </section>
+
+    <section>
+      <h2>How it's built</h2>
+      <p>
+        Inference runs on the phone through two runtimes behind one interface:
+        Gemini Nano via ML Kit GenAI, and open models (e.g. Qwen, Gemma) via
+        LiteRT-LM. A compare mode shows the engines side by side. The agent
+        manages its own context window — compacting old turns so a 2B-class model
+        can hold a long conversation — and discovers callable tools by parsing
+        other apps' shortcuts.
+      </p>
+      <p>
+        It's a sideloaded prototype for exploring what small on-device models
+        can do, not a published app.
+      </p>
+    </section>
+
+    <footer>
+      <p>© <span id="year"></span> HoSo Chueh · built plainly, hosted on GitHub Pages</p>
+    </footer>
+  </main>
+
+  <script src="/main.js"></script>
+</body>
+</html>
