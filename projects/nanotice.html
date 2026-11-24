@@ -54,9 +54,17 @@
         Inference runs on the phone through two runtimes behind one interface:
         Gemini Nano via ML Kit GenAI, and open models (e.g. Qwen, Gemma) via
         LiteRT-LM. A compare mode shows the engines side by side. The agent
-        manages its own context window — compacting old turns so a 2B-class model
-        can hold a long conversation — and discovers callable tools by parsing
+        manages its own context window so a 2B-class model can hold a long
+        conversation, and discovers callable tools by parsing
         other apps' shortcuts.
+      </p>
+      <p>
+        Small models don't follow native tool-calling reliably, so the agent
+        uses its own text protocol: tools are described in the system prompt
+        with a few examples, and the reply is parsed as a JSON call. Context
+        compaction is mechanical rather than model-written (old tool results
+        are stubbed and early turns folded into a digest), because a 2B model
+        summarizes poorly and every summary costs a generation on a phone.
       </p>
       <p>
         It's a sideloaded prototype for exploring what small on-device models

@@ -191,6 +191,19 @@
     .features h2 { font-family: var(--display); font-size: 1.35rem; margin-bottom: 0.4rem; }
     .features p { margin: 0; color: var(--soft); }
 
+    /* ---------- Second game ---------- */
+    .sibling {
+      border-top: 1px solid var(--line);
+      padding-block: clamp(2.5rem, 6vw, 4rem);
+      display: grid; grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center; gap: 1.5rem 3rem;
+    }
+    .sibling .tag { margin: 0 0 0.5rem; font-size: 0.82rem; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase; color: var(--seal); }
+    .sibling h2 { font-family: var(--display); font-size: clamp(1.6rem, 4vw, 2.2rem); line-height: 1.15; margin-bottom: 0.6rem; }
+    .sibling h2 span { font-family: var(--story); }
+    .sibling p { margin: 0; color: var(--soft); max-width: 54ch; }
+    .sibling .ghost { white-space: nowrap; }
+
     footer {
       border-top: 1px solid var(--line);
       padding-block: 1.75rem 2.5rem;
@@ -203,6 +216,7 @@
       .ghost { width: 100%; }
       .hero { grid-template-columns: 1fr; gap: 2.25rem; }
       .features { grid-template-columns: 1fr; gap: 1.75rem; }
+      .sibling { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -261,6 +275,18 @@
           characters appear as you explore.</p>
       </li>
     </ul>
+
+    <section class="sibling">
+      <div>
+        <p class="tag">Also from GGAI · new</p>
+        <h2><span lang="zh-Hant">屍潮</span> Horde: you are the zombie.</h2>
+        <p>A shared Taipei where every player is one zombie and the AI plays the
+          survivors trying to escape. The city moves half a day every hour,
+          so give your zombie an instinct, whisper something into the world,
+          and come back to see who made it out.</p>
+      </div>
+      <a class="ghost" href="https://horde.itshoso.com/">Play Horde →</a>
+    </section>
 
     <section class="closer">
       <h2>Lie to an innkeeper. See what happens.</h2>

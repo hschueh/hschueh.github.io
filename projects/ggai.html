@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>GGAI — HoSo Chueh</title>
-  <meta name="description" content="GGAI — an AI-native game monorepo: an LLM-driven text adventure played over Discord and the web." />
+  <meta name="description" content="GGAI — an AI-native game monorepo: an LLM-driven text RPG and 屍潮 (Horde), a multiplayer zombie game run by an AI game master." />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -21,34 +21,71 @@
     </nav>
 
     <header class="hero proj-hero">
-      <p class="eyebrow">Side project · in development</p>
+      <p class="eyebrow">Side project · two games live</p>
       <h1>GGAI</h1>
       <p class="tagline">A good game driven by AI, written by AI. A monorepo
-        of LLM-driven games, played in Traditional Chinese.</p>
+        of LLM-driven games where an AI agent runs the world, played in
+        Traditional Chinese.</p>
       <ul class="skills">
-        <li>TypeScript</li><li>Turborepo</li><li>AI SDK</li><li>Zod</li><li>Next.js</li>
+        <li>TypeScript</li><li>Turborepo</li><li>AI SDK</li><li>OpenRouter</li>
+        <li>Zod</li><li>React</li><li>SSE</li>
       </ul>
       <p class="more"><a href="/ggai/">Product page →</a></p>
     </header>
 
     <section class="prose">
-      <h2>The game</h2>
+      <h2>The games</h2>
+      <h3>GGAI: a text RPG that remembers</h3>
       <p>
         A single-player text adventure. You type anything you want to do, from
         Discord or the web, and an AI agent plays game master: it reads the
         world, rolls dice, narrates the outcome and records what changed.
         Worlds are templates, from Jin Yong wuxia to cyberpunk Taipei, and new
         places and characters are generated as you reach them.
+        <a href="https://alpha.itshoso.com/">Play the alpha ↗</a>
+      </p>
+      <h3>屍潮 (Horde): players are the zombies</h3>
+      <p>
+        A multiplayer zombie apocalypse in one shared Taipei. Every player
+        controls a single zombie; the AI plays the eight survivors trying to
+        get out of the city. The world moves on a clock, one half-day per hour,
+        so it's a game you check in on rather than sit at. You give your zombie
+        an instinct (who it was before it died), a one-off urge for the next
+        half-day, or whisper an event into the world, and the GM agent works
+        it all into the story. Survivors make their own plans, new ways out
+        can open mid-season, and nobody's ending is written in advance. Each
+        season leaves scars on the map that the next one inherits.
+        <a href="https://horde.itshoso.com/">Play Horde ↗</a>
       </p>
     </section>
 
     <section class="prose">
       <h2>How it's built</h2>
       <p>
-        The hard part of an AI game is keeping the model consistent. Here the
-        model only tells the story. It changes the world through typed tool
-        calls, every response is checked against a schema, and the world itself
-        is plain Markdown and JSON files that I can read and fix by hand.
+        The hard part of an AI game is keeping the model consistent. In both
+        games the model is an agent with tools, not a single prompt. Each turn
+        it starts from a short briefing, decides for itself whose files and
+        memories to read, rolls dice, and writes its rulings through typed tool
+        calls. Every write is checked against a Zod schema, and the game rules
+        live in plain code rather than in the prompt: movement, defences,
+        hunger and who escapes are settled by a deterministic resolver. The
+        agent's drafts are dry-run through that resolver as it works, so its
+        narration always matches what the rules actually decided.
+      </p>
+      <p>
+        Memory is modelled on how people remember. Every character, place and
+        player has a profile (what's true now), a memory file (facts that will
+        matter later) and a journal (what happened). The agent wakes up each
+        turn knowing nothing and carries continuity forward only through notes
+        it chooses to write. All of it is Markdown and JSON on disk, so I can
+        read and fix the world by hand.
+      </p>
+      <p>
+        Horde adds a public GM view: a live trace of every tool call, dice roll
+        and the agent's reasoning before each step, with plans that got
+        overturned by a bad roll or a rule flagged in red. Models are routed
+        through OpenRouter with per-game fallbacks, and shared packages handle
+        the AI layer, login (Google, Discord, email) and logging across games.
       </p>
     </section>
 
